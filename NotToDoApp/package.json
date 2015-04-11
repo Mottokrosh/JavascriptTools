@@ -18,5 +18,8 @@
   "homepage": "https://github.com/mottokrosh/Presentations",
   "dependencies": {
     "yargs": "^3.7.0"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.8"
   }
 }

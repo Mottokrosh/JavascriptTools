@@ -434,10 +434,37 @@ gulp.task('default', ['css', 'scripts', 'images'], function (done) {
 					<aside class="notes">The Node module pattern is so cool, what if we could use it for our front-end code? While we're at it, could we get rid of bower, and just use npm? Glad you asked.</aside>
 				</section>
 
-				<section>
-					<p><img src="img/browserify.png"></p>
-					<p>And a lot more...</p>
-					<!-- package.json example -->
+				<section data-background="img/brocade.jpg">
+					<section>
+						<p><img src="img/browserify.png"></p>
+						<p>And a lot more...</p>
+					</section>
+					<section>
+						<h2>package.json</h2>
+						<pre class="stretch"><code data-trim>
+{
+	"name": "NotToDoApp",
+	"version": "0.0.1",
+	"description": "A twist on the classic To Do demo app.",
+	"author": "Frank Reding &lt;frank@neontribe.co.uk>",
+	"main": "static/bundle.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mottokrosh/JavascriptTools"
+	},
+	"devDependencies": {
+		"browserify": "^9.0.8"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "browserify browser.js -o static/bundle.js",
+		"watch": "watchify browser.js -o static/bundle.js --debug --verbose"
+	}
+}
+						</code></pre>
+						<aside class="notes">Transforms, livereload. For more granularity, use API, or gaze.</aside>
+					</section>
+
 					<!-- gaze -->
 				</section>
 
