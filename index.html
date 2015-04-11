@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Tools of the Javascript Trade</title>
+
+		<meta name="description" content="A quick overview of the essential tools for the front-end developer">
+		<meta name="author" content="Frank Reding">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Tools of the Javascript Trade</h1>
+					<p>It's NodeJS with NPM basically.</p>
+					<p>
+						<small>By <a href="https://www.neontribe.co.uk/the-people-of-neontribe/">Frank Reding</a> / <a href="http://twitter.com/mottokrosh">@mottokrosh</a></small>
+					</p>
+					<footer>
+						<h3 style="margin-top: 10%">Warning: Contains Nudity</h3>
+					</footer>
+				</section>
+
+				<section data-background="img/thor.jpg">
+					<aside class="notes">Yes, I'm Asgardian.</aside>
+				</section>
+
+				<section>
+					<section>
+						<h1>Not To Do App</h1>
+						<aside class="notes">Example App: Not to Do List</aside>
+					</section>
+					<section>
+						<p class="stretch"><img src="img/not_to_do_app.png"></p>
+					</section>
+				</section>
+
+				<section data-background="img/nodejs-logo.png">
+					<section>
+						<aside class="notes">
+							Open source project run by Joyent, originally by Ryan Dahl. Platform built on V8. For fast, scalable aps. Event-driven, non-blocking I/O model.
+						</aside>
+					</section>
+					<section>
+						<p><img src="img/ryan_dahl.gif"></p>
+						<h3>Ryan Dahl!</h3>
+					</section>
+					<section>
+						<aside class="notes">The Node magic begins with package.json</aside>
+						<h2>package.json</h2>
+						<pre><code data-trim>
+{
+	"name": "NotToDoApp",
+	"version": "0.0.1",
+	"description": "A twist on the classic To Do demo app.",
+	"main": "index.html",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mottokrosh/Presentations"
+	},
+	"author": "@mottokrosh"
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>server.js</h2>
+						<pre><code data-trim>
+// Load the http module to create an http server.
+var http = require('http');
+
+// Configure our HTTP server to respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+	response.writeHead(200, {"Content-Type": "text/plain"});
+	response.end("Hello World\n");
+});
+
+// Listen on port 8000, IP defaults to 127.0.0.1/localhost
+server.listen(8000);
+
+// Put a friendly message on the terminal
+console.log("Server running at http://127.0.0.1:8000/");
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>npm install -S yargs</code></pre>
+						<h2>package.json</h2>
+						<pre><code data-trim>
+{
+	"name": "NotToDoApp",
+	"version": "0.0.1",
+	"description": "A twist on the classic To Do demo app.",
+	"main": "index.html",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mottokrosh/Presentations"
+	},
+	"author": "@mottokrosh",
+	"dependencies": {
+		"yargs": "^3.7.0"
+	}
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>server.js</h2>
+						<pre><code data-trim>
+// Load the http module to create an http server.
+var http = require('http');
+var argv = require('yargs').argv;
+
+// Configure our HTTP server to respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+	response.writeHead(200, { 'Content-Type': 'text/plain' });
+	response.end('Hello World\n');
+});
+
+// Listen on specified port or default to 8000, IP defaults to 127.0.0.1/localhost
+var port = argv.port || 8000;
+server.listen(port);
+
+// Put a friendly message on the terminal
+console.log('Server running at http://127.0.0.1:' + port + '/');
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+➜  NotToDoApp git:(master) ✗ node server.js --port 8002
+Server running at http://127.0.0.1:8002/
+						</code></pre>
+						<aside class="notes">But what the code inside the require'd file? How do we write our own module?</aside>
+					</section>
+					<section>
+						<pre><code data-trim>
+// nodomancy.js
+module.exports = function () {
+	console.log('Conjuring up Nodomancy...');
+	// additional code sorcery
+};
+						</code></pre>
+						<pre><code data-trim>
+// my_app.js
+var nodomancy = require('./nodomancy.js'); // or implied paths
+
+// perform the magic
+nodomancy();
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim>
+// advanced_nodomancy.js
+var Spell = function () {};
+
+Spell.prototype.cast = function (spell_name, save_type, dc) {
+	console.info('Casting %s. Roll a DC %s %s saving throw', spell_name, dc, save_type);
+};
+
+Spell.prototype.magic_missile = function () {
+	console.log('Casting Magic Missile at the darkness.');
+};
+
+module.exports = new Spell;
+						</code></pre>
+						<pre><code data-trim>
+// my_app.js
+var nodomancy = require('advanced_nodomancy');
+
+// perform the magic
+nodomancy.cast();
+
+// obscure geek culture reference
+if (darkness) {
+	nodomancy().magic_missile();
+	// http://knowyourmeme.com/memes/the-dead-alewives-dungeons-and-dragons
+}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<h1>The Old Way</h1>
+					<ol>
+						<li class="fragment">Download jQuery</li>
+						<li class="fragment">Extract and copy it into your project</li>
+						<li class="fragment">Reference it in your HTML</li>
+					</ol>
+				</section>
+
+				<section data-background="img/cool.jpg">
+					<h1>Cool</h1>
+				</section>
+
+				<section>
+					<p><img src="img/but.jpg"></p>
+				</section>
+
+				<section>
+					<pre class="stretch"><code data-trim style="font-size: 90%; line-height: 1;">
+&lt;!doctype html>
+	&lt;head>
+		&lt;meta charset="utf-8">
+		&lt;title>Not To Do App&lt;/title>
+	&lt;/head>
+	&lt;body ng-app="NotToDoApp">
+		&lt;script src="phonegap.js">&lt;/script>
+		&lt;script src="components/jquery/dist/jquery.js">&lt;/script>
+		&lt;script src="components/jqueryui/dist/jqueryui.core.js">&lt;/script>
+		&lt;script src="components/jqueryui/dist/jqueryui.widget.js">&lt;/script>
+		&lt;script src="components/jqueryui/dist/jqueryui.datepicker.js">&lt;/script>
+		&lt;script src="components/angular/angular.js">&lt;/script>
+		&lt;script src="components/angular-animate/angular-animate.js">&lt;/script>
+		&lt;script src="components/angular-router/angular-router.js">&lt;/script>
+		&lt;script src="components/angular-resource/angular-resource.js">&lt;/script>
+		&lt;script src="components/angular-sanitize/angular-sanitize.js">&lt;/script>
+		&lt;script src="components/angular-aria/angular-aria.js">&lt;/script>
+		&lt;script src="components/cookie-monster/lib/monster.js">&lt;/script>
+		&lt;script src="components/underscore/underscore.js">&lt;/script>
+		&lt;script src="components/moment/moment.js">&lt;/script>
+		&lt;script src="content/scenarios.js">&lt;/script>
+		&lt;script src="content/text.js">&lt;/script>
+		&lt;script src="scripts/services.js">&lt;/script>
+		&lt;script src="scripts/app.js">&lt;/script>
+		&lt;script src="scripts/controllers/main.js">&lt;/script>
+		&lt;script src="scripts/controllers/entry.js">&lt;/script>
+		&lt;script src="scripts/controllers/my.js">&lt;/script>
+		&lt;script src="scripts/controllers/profile.js">&lt;/script>
+		&lt;script src="scripts/controllers/read.js">&lt;/script>
+		&lt;script src="scripts/controllers/login.js">&lt;/script>
+		&lt;script src="scripts/controllers/logout.js">&lt;/script>
+		&lt;script src="scripts/controllers/register.js">&lt;/script>
+		&lt;script src="scripts/controllers/lostpassword.js">&lt;/script>
+		&lt;script src="scripts/controllers/backdoor.js">&lt;/script>
+		&lt;script src="scripts/controllers/fixednav.js">&lt;/script>
+		&lt;script src="scripts/controllers/dialog.js">&lt;/script>
+		&lt;script src="scripts/controllers/demo.js">&lt;/script>
+	&lt;/body>
+&lt;/html>
+					</code></pre>
+				</section>
+
+				<section data-background="img/nightmare.jpg"></section>
+
+				<section>
+					<section>
+						<aside class="notes">Enter Yeoman. "a commoner who cultivates his own land."</aside>
+						<img src="img/yeoman.png" class="stretch">
+					</section>
+					<section>
+						<aside class="notes">Originally yo, grunt, bower. Now the site explicity mentions gulp, npm.</aside>
+						<img src="img/logo_yo.png" style="margin: 0 20px;">
+						<img src="img/logo_grunt.png" style="margin: 0 20px;">
+						<img src="img/logo_bower.png" style="margin: 0 20px;">
+					</section>
+					<section>
+						<aside class="notes">Grunt was first, but many competitors have emerged. Also desktop apps (mixture.io, CodeKit). Also, npm instead of bower.</aside>
+						<img src="img/grunt-gulp-brunch.png">
+					</section>
+				</section>
+
+				<section>
+					<section data-markdown>
+						<aside class="notes">Let's have a look at how to use gulp.</aside>
+						<script type="text/template">
+							## Gulp
+							Install gulp globally (somewhat annoyingly):
+
+							```
+							npm install --global gulp
+							```
+
+							Install gulp in your project devDependencies:
+
+							```
+							npm install --save-dev gulp // or npm install -D gulp
+							```
+
+							Create a gulpfile.js at the root of your project:
+
+							```
+							var gulp = require('gulp');
+
+							gulp.task('default', function() {
+								// place code for your default task here
+							});
+							```
+
+							Run gulp:
+
+							```
+							gulp
+							```
+						</script>
+					</section>
+					<section>
+						<h2>gulpfile.js</h2>
+						<pre><code data-trim>
+var gulp       = require('gulp');
+var sourcemaps = require('gulp-sourcemaps');
+var sass       = require('gulp-sass');
+var prefix     = require('gulp-autoprefixer');
+var csso       = require('gulp-csso');
+
+gulp.task('css', function () {
+	return gulp.src('src/css/**/*.scss') // any order
+		.pipe(sourcemaps.init())
+		.pipe(sass())
+		.pipe(prefix())
+		.pipe(csso())
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('public/css'));
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>gulpfile.js (cont'd)</h2>
+						<pre><code data-trim>
+var jshint  = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+var concat  = require('gulp-concat');
+var uglify  = require('gulp-uglify');
+
+gulp.task('scripts', function () {
+	return gulp.src(['src/js/start.js', 'src/js/**/*.js']) // partially determined order
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish))
+		.pipe(sourcemaps.init())
+		.pipe(concat('app.js'))
+		.pipe(uglify())
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('public/js'));
+});
+						</code></pre>
+						<aside class="notes">Same with vendor files.</aside>
+					</section>
+					<section>
+						<aside class="notes">Here's something cool. Auto-optimising images. Doesn't stop there. SVGs, fonts, icon fonts, sprites, you name it, there's a npm/gulp module for it.</aside>
+						<h2>gulpfile.js (cont'd)</h2>
+						<pre><code data-trim>
+var imagemin = require('gulp-imagemin');
+
+gulp.task('images', function () {
+	return gulp.src('src/img/**/*.{png,jpg}')
+		.pipe(imagemin())
+		.pipe(gulp.dest('public/img'));
+});
+						</code></pre>
+					</section>
+					<section data-background="#a00">
+						<h2>JPEG</h2>
+						<div style="display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex">
+							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
+								<img src="img/chuck-norris.jpg"><br>301 KB
+							</figure>
+							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
+								<img src="img/chuck-norris-optimised.jpg"><br>298 KB
+							</figure>
+						</div>
+					</section>
+					<section>
+						<h2>PNG</h2>
+						<div style="display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex">
+							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
+								<img src="img/futurama.png"><br>880 KB
+							</figure>
+							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
+								<img src="img/futurama-optimised.png"><br>202 KB
+							</figure>
+						</div>
+					</section>
+					<section>
+						<aside class="notes">And finally... We could augment this in all sorts of ways (versioning, vendor files, html templates, favicons, etc.)</aside>
+						<h2>gulpfile.js (cont'd)</h2>
+						<pre class="stretch"><code data-trim>
+var express = require('express');
+var karma   = require('karma').server;
+
+gulp.task('default', ['css', 'scripts', 'images'], function (done) {
+	// Create simple static server
+	var app = express();
+	app.use(express.static(__dirname + '/public'));
+	app.listen(8080);
+	console.log('Listening on :8080');
+
+	// Fire up Karma for our unit tests
+	karma.start({
+		configFile: __dirname + '/test/karma.conf.js'
+	}, done);
+
+	// Watch for file changes
+	gulp.watch('src/css/**/*.scss', ['css']);
+	gulp.watch('src/js/**/*.js', ['scripts']);
+	gulp.watch('src/img/**/*.{png,jpg}', ['images']);
+});
+						</code></pre>
+					</section>
+				</section>
+
+				<section data-background="img/different.gif">
+					<aside class="notes">The Node module pattern is so cool, what if we could use it for our front-end code? While we're at it, could we get rid of bower, and just use npm? Glad you asked.</aside>
+				</section>
+
+				<section>
+					<p><img src="img/browserify.png"></p>
+					<p>And a lot more...</p>
+					<!-- package.json example -->
+					<!-- gaze -->
+				</section>
+
+				<!-- general tips -->
+
+				<section>
+					<h1>That's all, folks!</h1>
+					<p><img src="img/sad_pony.gif"></p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				width: 1280,
+				height: 800,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

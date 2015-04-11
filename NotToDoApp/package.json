@@ -1,0 +1,22 @@
+{
+  "name": "NotToDoApp",
+  "version": "0.0.1",
+  "description": "A twist on the classic To Do demo app.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mottokrosh/Presentations"
+  },
+  "author": "@mottokrosh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mottokrosh/Presentations/issues"
+  },
+  "homepage": "https://github.com/mottokrosh/Presentations",
+  "dependencies": {
+    "yargs": "^3.7.0"
+  }
+}
