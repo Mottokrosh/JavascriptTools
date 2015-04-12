@@ -4,7 +4,8 @@
   "description": "A twist on the classic To Do demo app.",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server --port 8002"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "yargs": "^3.7.0"
   },
   "devDependencies": {
-    "browserify": "^9.0.8"
+    "browserify": "^9.0.8",
+    "karma": "^0.12.31"
   }
 }

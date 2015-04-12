@@ -453,24 +453,55 @@ gulp.task('default', ['css', 'scripts', 'images'], function (done) {
 		"url": "https://github.com/mottokrosh/JavascriptTools"
 	},
 	"devDependencies": {
-		"browserify": "^9.0.8"
+		"browserify": "^9.0.8",
+		"karma": "^0.12.31"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "karma start --auto-watch",
 		"build": "browserify browser.js -o static/bundle.js",
 		"watch": "watchify browser.js -o static/bundle.js --debug --verbose"
 	}
 }
 						</code></pre>
-						<aside class="notes">Transforms, livereload. For more granularity, use API, or gaze.</aside>
+						<aside class="notes">Node core modules (some shimmed), Transforms, livereload. For more granularity, use API, or gaze.</aside>
 					</section>
-
-					<!-- gaze -->
 				</section>
 
-				<!-- general tips -->
+				<section data-background="img/tips.jpg">
+					<h1>General Tips</h1>
+					<ul class="stretch">
+						<li>
+							Node - reading values from JSON files:<br>
+							<pre><code data-trim>
+var tips = require('./content/dump.json');
+console.log(tips.general);
+							</code></pre>
+						</li>
+						<li>
+							Node - command line shortcuts:<br>
+							<pre><code data-trim>
+npm start // === npm run start
+npm test // === npm run test
+							</code></pre>
+						</li>
+						<li>
+							Gulp - task dependencies:<br>
+							<pre><code data-trim>
+gulp.task('css', ['fonts'], function () {
+	// ensures the 'fonts' task is run and completed before this one starts
+});
+							</code></pre>
+						</li>
+					</ul>
+				</section>
 
 				<section>
+					<h1>Conclusion</h1>
+					<p><img src="img/mr-burns-excellent.gif"></p>
+					<aside class="notes">Regardless which tools, they help streamline, simplify, and accelerate workflow. If not, re-evaluate. Easy to spend too much time on build tools. Great communit for each approach. If you write your own, OS publish it!</aside>
+				</section>
+
+				<section data-transition="zoom">
 					<h1>That's all, folks!</h1>
 					<p><img src="img/sad_pony.gif"></p>
 				</section>
