@@ -38,7 +38,6 @@
 
 		<div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
 					<h1>Tools of the Javascript Trade</h1>
@@ -49,6 +48,7 @@
 					<footer>
 						<h3 style="margin-top: 10%">Warning: Contains Nudity</h3>
 					</footer>
+					<aside class="notes">Quick intro about me.</aside>
 				</section>
 
 				<section data-background="img/thor.jpg">
@@ -58,9 +58,10 @@
 				<section>
 					<section>
 						<h1>Not To Do App</h1>
-						<aside class="notes">Example App: Not to Do List</aside>
+						<aside class="notes">Traditionally, a to-do example app, so I'll be using this instead.</aside>
 					</section>
 					<section>
+						<aside class="notes">Here's how it might look like. Start reading first point. Anway, the daddy of JS tools is Node.</aside>
 						<p class="stretch"><img src="img/not_to_do_app.png"></p>
 					</section>
 				</section>
@@ -68,7 +69,7 @@
 				<section data-background="img/nodejs-logo.png">
 					<section>
 						<aside class="notes">
-							Open source project run by Joyent, originally by Ryan Dahl. Platform built on V8. For fast, scalable aps. Event-driven, non-blocking I/O model.
+							Open source project run by Joyent, originally by Ryan Dahl. Platform built on V8. For fast, scalable aps. Event-driven, non-blocking I/O model. Compare connections to Apache.
 						</aside>
 					</section>
 					<section>
@@ -76,26 +77,27 @@
 						<h3>Ryan Dahl!</h3>
 					</section>
 					<section>
-						<aside class="notes">The Node magic begins with package.json</aside>
+						<aside class="notes">The Node magic begins with package.json. Here's a very tiny one. We'll build on it.</aside>
 						<h2>package.json</h2>
 						<pre><code data-trim>
 {
 	"name": "NotToDoApp",
 	"version": "0.0.1",
 	"description": "A twist on the classic To Do demo app.",
-	"main": "index.html",
+	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/mottokrosh/Presentations"
+		"url": "https://github.com/Mottokrosh/JavascriptTools"
 	},
-	"author": "@mottokrosh"
+	"author": "Frank Reding (@mottokrosh)"
 }
 						</code></pre>
 					</section>
 					<section>
+						<aside class="notes">And here's a node script. Server that returns 'Hello, world'. How about making the port configurable?</aside>
 						<h2>server.js</h2>
 						<pre><code data-trim>
 // Load the http module to create an http server.
@@ -104,7 +106,7 @@ var http = require('http');
 // Configure our HTTP server to respond with Hello World to all requests.
 var server = http.createServer(function (request, response) {
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.end("Hello World\n");
+	response.end("Hello, world.\n");
 });
 
 // Listen on port 8000, IP defaults to 127.0.0.1/localhost
@@ -115,6 +117,7 @@ console.log("Server running at http://127.0.0.1:8000/");
 						</code></pre>
 					</section>
 					<section>
+						<aside class="notes">Here's how we add a module, and save it to package.json</aside>
 						<pre><code>npm install -S yargs</code></pre>
 						<h2>package.json</h2>
 						<pre><code data-trim>
@@ -122,15 +125,15 @@ console.log("Server running at http://127.0.0.1:8000/");
 	"name": "NotToDoApp",
 	"version": "0.0.1",
 	"description": "A twist on the classic To Do demo app.",
-	"main": "index.html",
+	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/mottokrosh/Presentations"
+		"url": "https://github.com/Mottokrosh/JavascriptTools"
 	},
-	"author": "@mottokrosh",
+	"author": "Frank Reding (@mottokrosh)",
 	"dependencies": {
 		"yargs": "^3.7.0"
 	}
@@ -138,6 +141,7 @@ console.log("Server running at http://127.0.0.1:8000/");
 						</code></pre>
 					</section>
 					<section>
+						<aside class="notes">Let's update our script.</aside>
 						<h2>server.js</h2>
 						<pre><code data-trim>
 // Load the http module to create an http server.
@@ -163,9 +167,10 @@ console.log('Server running at http://127.0.0.1:' + port + '/');
 ➜  NotToDoApp git:(master) ✗ node server.js --port 8002
 Server running at http://127.0.0.1:8002/
 						</code></pre>
-						<aside class="notes">But what the code inside the require'd file? How do we write our own module?</aside>
+						<aside class="notes">And here's how we run it. But what about the code inside the require'd file? How do we write our own module?</aside>
 					</section>
 					<section>
+						<aside class="notes">Let's write a module called Nodomancy. It'll be magical. var exports = module.exports = {}; Never do exports =, that breaks ref. Use exports.thing = f(), or always module.exports.</aside>
 						<pre><code data-trim>
 // nodomancy.js
 module.exports = function () {
@@ -182,6 +187,7 @@ nodomancy();
 						</code></pre>
 					</section>
 					<section>
+						<aside class="notes">Add public API to our module. Mention require path resolution.</aside>
 						<pre><code data-trim>
 // advanced_nodomancy.js
 var Spell = function () {};
@@ -213,6 +219,7 @@ if (darkness) {
 				</section>
 
 				<section>
+					<aside class="notes">Old way of coding front-end app.</aside>
 					<h1>The Old Way</h1>
 					<ol>
 						<li class="fragment">Download jQuery</li>
@@ -230,6 +237,7 @@ if (darkness) {
 				</section>
 
 				<section>
+					<aside class="notes">Few apps are that simple. Before you know. And now updating, maintaining is a nightmare.</aside>
 					<pre class="stretch"><code data-trim style="font-size: 90%; line-height: 1;">
 &lt;!doctype html>
 	&lt;head>
@@ -327,6 +335,7 @@ if (darkness) {
 						</script>
 					</section>
 					<section>
+						<aside class="notes">Let's make a simple gulpfile. Starting with CSS.</aside>
 						<h2>gulpfile.js</h2>
 						<pre><code data-trim>
 var gulp       = require('gulp');
@@ -347,6 +356,7 @@ gulp.task('css', function () {
 						</code></pre>
 					</section>
 					<section>
+						<aside class="notes">Gylp task execute concurrently. When file order is important, specify. Might want to do a similar thing with vendor scripts.</aside>
 						<h2>gulpfile.js (cont'd)</h2>
 						<pre><code data-trim>
 var jshint  = require('gulp-jshint');
@@ -365,7 +375,6 @@ gulp.task('scripts', function () {
 		.pipe(gulp.dest('public/js'));
 });
 						</code></pre>
-						<aside class="notes">Same with vendor files.</aside>
 					</section>
 					<section>
 						<aside class="notes">Here's something cool. Auto-optimising images. Doesn't stop there. SVGs, fonts, icon fonts, sprites, you name it, there's a npm/gulp module for it.</aside>
@@ -381,6 +390,7 @@ gulp.task('images', function () {
 						</code></pre>
 					</section>
 					<section data-background="#a00">
+						<aside class="notes">Example</aside>
 						<h2>JPEG</h2>
 						<div style="display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex">
 							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
@@ -392,6 +402,7 @@ gulp.task('images', function () {
 						</div>
 					</section>
 					<section>
+						<aside class="notes">Great results for PNGs</aside>
 						<h2>PNG</h2>
 						<div style="display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex">
 							<figure style="-webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1">
@@ -403,7 +414,7 @@ gulp.task('images', function () {
 						</div>
 					</section>
 					<section>
-						<aside class="notes">And finally... We could augment this in all sorts of ways (versioning, vendor files, html templates, favicons, etc.)</aside>
+						<aside class="notes">And finally, server and watch. We could augment this in all sorts of ways (versioning, vendor files, html templates, favicons, etc.)</aside>
 						<h2>gulpfile.js (cont'd)</h2>
 						<pre class="stretch"><code data-trim>
 var express = require('express');
@@ -431,7 +442,7 @@ gulp.task('default', ['css', 'scripts', 'images'], function (done) {
 				</section>
 
 				<section data-background="img/different.gif">
-					<aside class="notes">The Node module pattern is so cool, what if we could use it for our front-end code? While we're at it, could we get rid of bower, and just use npm? Glad you asked.</aside>
+					<aside class="notes">The Node module pattern is so cool, what if we could use it for our front-end code? While we're at it, could we get rid of bower, and just use npm? Explain difference. package.main. npm front-end means main file requires its own dependencies.</aside>
 				</section>
 
 				<section data-background="img/brocade.jpg">
@@ -498,12 +509,13 @@ gulp.task('css', ['fonts'], function () {
 				<section>
 					<h1>Conclusion</h1>
 					<p><img src="img/mr-burns-excellent.gif"></p>
-					<aside class="notes">Regardless which tools, they help streamline, simplify, and accelerate workflow. If not, re-evaluate. Easy to spend too much time on build tools. Great communit for each approach. If you write your own, OS publish it!</aside>
+					<aside class="notes">Regardless which tools, they help streamline, simplify, and accelerate workflow. If not, re-evaluate. Easy to spend too much time on build tools (especially configuring or debugging grunt). Great community for each approach. If you write your own, OS publish it!</aside>
 				</section>
 
 				<section data-transition="zoom">
 					<h1>That's all, folks!</h1>
 					<p><img src="img/sad_pony.gif"></p>
+					<p><a href="https://github.com/Mottokrosh/JavascriptTools">https://github.com/Mottokrosh/JavascriptTools</a></p>
 				</section>
 
 			</div>
